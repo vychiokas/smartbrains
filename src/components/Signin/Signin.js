@@ -17,7 +17,8 @@ class Signin extends React.Component {
         this.setState({signInPassword: event.target.value})
     }
 
-    onSubmitSignIn = () => {
+    onSubmitSignIn = (e) => {
+        e.preventDefault();
         fetch('http://localhost:3000/signin', {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
@@ -27,17 +28,17 @@ class Signin extends React.Component {
                 })
             })
             // .then(this.props.onRouteChange('home'))
-            .then(response => {
-                this.setState({httpResponse: response.json()})
-            })
-            // .then(response => response.json())
-            // .then(data => {
-            //     // console.log(data);
-            //     if (data === 'success'){
-            //         return this.props.onRouteChange('home');
-                    
-            //     }
+            // .then(response => {
+            //     this.setState({httpResponse: response.json()})
             // })
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                if (data === 'success'){
+                    return this.props.onRouteChange('home');
+                    
+                }
+            })
             
     }
     render() {
