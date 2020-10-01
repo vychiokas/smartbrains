@@ -6,7 +6,6 @@ class Signin extends React.Component {
         this.state = {
             signInEmail:'',
             signInPassword: '',
-            httpResponse: '',
         }
     }
     onEmailChange = (event) => {
@@ -27,20 +26,15 @@ class Signin extends React.Component {
                 password: this.state.signInPassword
                 })
             })
-            // .then(this.props.onRouteChange('home'))
-            // .then(response => {
-            //     this.setState({httpResponse: response.json()})
-            // })
             .then(response => response.json())
-            .then(data => {
-                // console.log(data);
-                if (data === 'success'){
-                    return this.props.onRouteChange('home');
-                    
-                }
+            .then(user => {
+              if(user.id){
+                this.props.loadUser(user);
+                this.props.onRouteChange('home');
+              }
             })
-            
     }
+
     render() {
         console.log(this.state);
         const { onRouteChange } = this.props;
